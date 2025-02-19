@@ -28,7 +28,7 @@ def run(cfg, create_dataset, create_model, train, test, evaluator=None, samples=
     run_tests = []
     if cfg.wandb:
         wandb.init(
-            project=cfg.project_name,  # Replace with your project name
+            project="PEARL",  # Replace with your project name
             name=cfg.run_name,         # Optional: Give your run a name
             config=cfg
         )
@@ -51,7 +51,8 @@ def run(cfg, create_dataset, create_model, train, test, evaluator=None, samples=
         for epoch in range(1, cfg.train.epochs+1):
             start = time.time()
             model.train()
-            train_loss = train(train_loader, model, optimizer, device=cfg.device, samples=samples)
+            #train_loss = train(train_loader, model, optimizer, device=cfg.device, samples=samples)
+            train_loss = train(train_loader, model, optimizer, device=cfg.device)
             scheduler.step()
             memory_allocated = torch.cuda.max_memory_allocated(cfg.device) // (1024 ** 2)
             memory_reserved = torch.cuda.max_memory_reserved(cfg.device) // (1024 ** 2)
